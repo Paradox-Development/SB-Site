@@ -91,11 +91,25 @@ the page by design. Find them with
 
 ## Note on paths
 
-Assets and links are root-relative (`/styles.css`, `/field-notes/`), which
-assumes the site is served from a domain root. That's correct for
-`sherryblackman.com`, and correct for the local preview server — but it means
-the `paradox-development.github.io/SB-Site/` project URL will render unstyled.
-Review locally, not there.
+Every internal link and asset is **depth-relative** (`styles.css` at the root,
+`../styles.css` one level down, `../../styles.css` two). This is deliberate:
+root-relative paths (`/styles.css`) only resolve when the site is served from a
+domain root, so they render the site completely unstyled on the GitHub Pages
+project URL and when a page is opened straight off disk. Relative paths work in
+all three places, which means the site can be reviewed anywhere before the
+domain is switched over:
+
+- `paradox-development.github.io/SB-Site/` ✓
+- the local preview server ✓
+- double-clicking `index.html` ✓
+- `sherryblackman.com` after cutover ✓
+
+`<link rel="canonical">` and `og:url` stay absolute and point at
+`sherryblackman.com` — that's correct, and tells search engines where the real
+site lives regardless of where a copy is being previewed.
+
+**If you add a page, keep paths relative to that page's depth.** A `/`-prefixed
+link will look fine on the live domain and silently break everywhere else.
 
 ## Previewing
 

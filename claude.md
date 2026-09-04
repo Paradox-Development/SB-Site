@@ -175,10 +175,12 @@ added over time. As built:
   Pages can't do redirects, so a rename is a dead link with no way to patch
   it. If Sherry wants a page renamed, explain that the address needs to stay
   put and offer to change the visible title instead.
-- **Links and assets are root-relative** (`/styles.css`, `/blog/`). Keep them
-  that way. This works on the live domain and on the local preview server, but
-  it means the `github.io` project URL renders unstyled — always review on
-  the local preview, never link her to the github.io address.
+- **Links and assets are depth-relative, and must stay that way.** A page at
+  the root says `styles.css`, one in a folder says `../styles.css`, a blog post
+  two deep says `../../styles.css`. Never write a `/`-prefixed link — it will
+  look fine on the live domain and silently break the styling everywhere else
+  (the GitHub Pages preview address, and opening a page straight off disk).
+  When you add a page, count its depth and match the other links on it.
 - **Styling lives in `styles.css`.** Colours and fonts are CSS variables in
   `:root` at the top. For "make it warmer", "bigger text", "different colour"
   requests, change the variable rather than patching individual rules.
