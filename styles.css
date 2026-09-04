@@ -1,45 +1,489 @@
+/* ============================================================
+   Sherry Blackman - site styles
+   Plain CSS, no build step. Edit freely.
+   Colour and type choices live in :root below - change those
+   values to re-skin the whole site at once.
+   ============================================================ */
+
 :root {
   color-scheme: light;
-  --ink: #2a2a2a;
-  --paper: #fbfaf7;
-  --accent: #7a4b2c;
+
+  /* Colours */
+  --ink:         #2a2622;  /* body text */
+  --ink-soft:    #5f574f;  /* secondary text */
+  --paper:       #fbfaf7;  /* page background */
+  --paper-alt:   #f3eee4;  /* alternating band background */
+  --accent:      #7a4b2c;  /* links, buttons */
+  --accent-deep: #573320;  /* button hover */
+  --rule:        #e3dacb;  /* hairlines and borders */
+
+  /* Type */
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Layout */
+  --measure: 68rem;  /* max content width */
+  --prose: 38rem;    /* max width for long-form reading */
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--ink);
   background: var(--paper);
-  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
 }
 
-main {
-  max-width: 40rem;
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--accent); text-underline-offset: 0.15em; }
+a:hover { color: var(--accent-deep); }
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+p { margin: 0 0 1.1em; }
+
+.wrap {
+  max-width: var(--measure);
   margin: 0 auto;
-  padding: 4rem 1.5rem;
+  padding: 0 1.5rem;
+}
+
+/* Screen-reader-only text (used for icon labels) */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+
+.btn--ghost { background: transparent; color: var(--accent); }
+.btn--ghost:hover { background: var(--accent); color: #fff; }
+
+.btn--small { padding: 0.5rem 1rem; font-size: 0.75rem; }
+
+/* ---------- Header ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1.25rem 0 1rem;
+}
+
+.wordmark {
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.wordmark span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 0.35rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* ---------- Social icons ---------- */
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.social a {
+  display: block;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+.social a:hover { color: var(--accent); }
+.social svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+
+/* ---------- Navigation ---------- */
+
+.nav-toggle { display: none; }
+.nav-toggle-label { display: none; }
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 1rem;
+}
+.site-nav a {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  display: block;
+}
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .nav-toggle-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 0.5rem 0 1rem;
+    user-select: none;
+  }
+  .site-nav ul {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .site-nav li { width: 100%; border-top: 1px solid var(--rule); }
+  .site-nav a { padding: 0.75rem 0; }
+  .nav-toggle:checked ~ .site-nav ul { display: flex; }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: 4.5rem 0 3.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.hero .eyebrow {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.hero h1 { margin-bottom: 0.75rem; }
+.hero .lede {
+  max-width: 34rem;
+  margin: 0 auto 1.75rem;
+  font-size: 1.1875rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Generic section ---------- */
+
+.section { padding: 4rem 0; }
+.section--alt { background: var(--paper-alt); }
+.section--tight { padding: 2.5rem 0; }
+
+.section-head {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 3rem;
+}
+.section-head .eyebrow {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Book feature rows ---------- */
+
+.book {
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+  padding: 3rem 0;
+  border-top: 1px solid var(--rule);
+}
+.book:first-of-type { border-top: 0; padding-top: 0; }
+
+/* Alternate the cover to the right on every other book */
+.book--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); }
+.book--flip .book-cover { order: 2; }
+.book--flip .book-body { order: 1; }
+
+.book-cover img {
+  width: 100%;
+  border: 1px solid var(--rule);
+  box-shadow: 0 12px 28px rgba(42, 38, 34, 0.13);
+}
+
+/* Dashed slot shown until a real cover image is dropped in */
+.cover-placeholder {
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  border: 2px dashed var(--rule);
+  background: var(--paper-alt);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.book-body h2, .book-body h3 { margin-bottom: 0.35rem; }
+.book-subtitle {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+}
+
+.buy-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 760px) {
+  .book,
+  .book--flip { grid-template-columns: 1fr; gap: 1.75rem; }
+  .book--flip .book-cover,
+  .book--flip .book-body { order: 0; }
+  .book-cover { max-width: 16rem; }
+}
+
+/* ---------- Testimonials ---------- */
+
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 2rem;
+}
+
+.testimonial {
+  margin: 0;
+  padding: 1.75rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+.testimonial p { font-style: italic; }
+.testimonial footer {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Long-form prose ---------- */
+
+.prose { max-width: var(--prose); margin: 0 auto; }
+.prose h2 { margin-top: 2.25rem; }
+.prose ul, .prose ol { padding-left: 1.25rem; margin: 0 0 1.1em; }
+.prose li { margin-bottom: 0.4em; }
+.prose blockquote {
+  margin: 1.75rem 0;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ---------- Photo gallery (Field Notes) ---------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.5rem;
+}
+.gallery figure { margin: 0; }
+.gallery img { width: 100%; border: 1px solid var(--rule); }
+.gallery figcaption {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  padding-top: 0.6rem;
+}
+.gallery .cover-placeholder { aspect-ratio: 4 / 3; }
+
+/* ---------- Press list ---------- */
+
+.press-list { list-style: none; margin: 0; padding: 0; }
+.press-list li {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--rule);
+}
+.press-list li:first-child { border-top: 0; }
+.press-list .outlet {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* ---------- Blog post list ---------- */
+
+.post-list { list-style: none; margin: 0; padding: 0; }
+.post-list li { padding: 1.75rem 0; border-top: 1px solid var(--rule); }
+.post-list li:first-child { border-top: 0; padding-top: 0; }
+.post-list h2 { font-size: 1.375rem; margin-bottom: 0.25rem; }
+.post-list time {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Forms ---------- */
+
+.form { max-width: 34rem; }
+.field { margin-bottom: 1.25rem; }
+.field label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.7rem 0.85rem;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+.field textarea { min-height: 10rem; resize: vertical; }
+
+/* ---------- Editor note ---------- */
+/* A visible reminder to whoever is filling the site in. Delete the
+   whole <p class="editor-note"> element once the real content is in. */
+.editor-note {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: #6b4a13;
+  background: #fdf4dd;
+  border-left: 3px solid #d9a521;
+  padding: 0.85rem 1rem;
+  margin: 0 0 1.5rem;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-alt);
+  padding: 3rem 0 2.5rem;
   text-align: center;
 }
-
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+.site-footer .social { justify-content: center; margin-bottom: 1.5rem; }
+.footer-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
 }
-
-p {
-  margin: 0.5rem 0;
+.footer-nav a {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
 }
-
-a {
-  color: var(--accent);
+.footer-nav a:hover { color: var(--accent); }
+.colophon {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin: 0;
 }
-
-footer {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  font-size: 0.85rem;
-  opacity: 0.7;
-}
+.colophon a { color: var(--ink-soft); }

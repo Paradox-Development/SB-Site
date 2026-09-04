@@ -1,13 +1,13 @@
-# [CLIENT NAME] — Claude instructions
+# Sherry Blackman — Claude instructions
 
-This repo is the [CLIENT NAME] website. It is edited **self-service** by
-[OWNER NAME] (non-technical) talking to you in Claude Code with this folder
+This repo is the Sherry Blackman website. It is edited **self-service** by
+Sherry (non-technical) talking to you in Claude Code with this folder
 open. Your job: make their requested changes safely, let them preview them
 locally, and publish them — while hiding every git/GitHub mechanic from them.
 
 ## Who you're talking to
 
-[OWNER NAME] owns [CLIENT NAME]. They are not technical and should never have
+Sherry owns Sherry Blackman. They are not technical and should never have
 to think about branches, commits, or pull requests. Speak plain English —
 "changes", "preview", "publish", "live". Never say "branch", "commit", "push",
 "pull request", or "merge" to them. Confirm what you understood before making
@@ -16,14 +16,14 @@ large changes.
 ## Repo facts
 
 - **Stack:** vanilla HTML / CSS / a little JavaScript. Static, no build step.
-- **Deploys:** GitHub Pages from `main` → [DOMAIN] (CNAME).
+- **Deploys:** GitHub Pages from `main` → sherryblackman.com (CNAME).
 - **Publishing is automated:** when a pull request from a `session/*` branch is
   opened into `main`, a GitHub Action validates it and merges it; GitHub Pages
   then rebuilds the live site in a minute or two. **You open the PR — the
   Action does the merge.** Never push directly to `main`.
 - **Visibility:** this repo is public — GitHub Pages requires it. Everything
   in it is world-readable, including full history.
-- **Brand:** [one-line description of brand/tone].
+- **Brand:** Warm, literary, unhurried. A working writer's site: the books come first, the prose is plain, and nothing shouts..
 
 ## The editing workflow — follow this every time they ask for a change
 
@@ -39,7 +39,7 @@ git checkout -b "session/<today's date and time>"
 ```
 
 (Use whatever the equivalent is for the shell you're in. Don't mention
-branches to [OWNER NAME].)
+branches to Sherry.)
 
 **2. Make the edit.** Determine which file(s) the request touches — list
 `*.html` to see the pages. Edit them directly, matching the existing visual
@@ -72,7 +72,7 @@ gh pr create --base main --title "<their note>" --body "<their note>"
 
 Do **not** show them the PR link or any GitHub URLs.
 
-**6. Hand-off.** Tell them: *"Your changes are publishing now — give [DOMAIN]
+**6. Hand-off.** Tell them: *"Your changes are publishing now — give sherryblackman.com
 a minute or two, then refresh and you'll see them."* The Action validates and
 merges on its own; you do not merge it yourself.
 
@@ -81,7 +81,7 @@ merges on its own; you do not merge it yourself.
 - **This repo is public, so nothing in it is private.** Before committing,
   skim the diff for anything that looks like a password, API key, private
   key, or other credential. If you spot one, stop and flag it to
-  [OWNER NAME] instead of publishing it — don't fix it silently, since they
+  Sherry instead of publishing it — don't fix it silently, since they
   may not realize they pasted it. There's also an automated check in the
   publish pipeline that blocks obviously credential-shaped content as a
   backstop, but treat that as a safety net, not the first line of defense.
@@ -143,9 +143,76 @@ Two rules that never bend:
    site is down, GitHub access is fully broken, or anything touching the
    domain/DNS. For the small stuff, you and they have it.
 
-## Pages (reference — discovered at runtime)
+## This site specifically
 
-- Always list `*.html` at runtime; pages get added and renamed over time.
+**Pages.** Always confirm at runtime (`ls */index.html *.html`) — pages get
+added over time. As built:
+
+| Page | Folder |
+| --- | --- |
+| Home | `index.html` |
+| About | `author-sherry-blackman/` |
+| Rev-It-Up | `rev-it-up/` |
+| Letters to Our Daughters | `letters-to-our-daughters/` |
+| Tales from the Trail | `tales-from-the-trail-stories-from-the-oldest-hiker-hostel-on-the-appalachian-trail-by-sherry-blackman/` |
+| Field Notes (photo gallery) | `field-notes/` |
+| Call to Witness | `call-to-witness-by-sherry-blackman/` |
+| Press & Media | `author-press-and-media/` |
+| Contact | `contact-sherry-blackman/` |
+| Blog | `blog/` |
+| Not-found / legal | `404.html`, `privacy-policy.html`, `terms-and-conditions.html` |
+
+**Things about this site that will bite you if you don't know them:**
+
+- **The header and footer are copied into every page.** There's no build step
+  and no include mechanism — that's the trade-off for keeping the HTML
+  directly editable. So a nav change, a new page in the menu, or a new social
+  link means editing *every* `.html` file, not one. Change them all in the
+  same change set, then check a couple of pages in the preview to be sure none
+  were missed.
+- **Don't rename or move page folders.** The URLs deliberately match the old
+  WordPress site so existing links and search results keep working. GitHub
+  Pages can't do redirects, so a rename is a dead link with no way to patch
+  it. If Sherry wants a page renamed, explain that the address needs to stay
+  put and offer to change the visible title instead.
+- **Links and assets are root-relative** (`/styles.css`, `/blog/`). Keep them
+  that way. This works on the live domain and on the local preview server, but
+  it means the `github.io` project URL renders unstyled — always review on
+  the local preview, never link her to the github.io address.
+- **Styling lives in `styles.css`.** Colours and fonts are CSS variables in
+  `:root` at the top. For "make it warmer", "bigger text", "different colour"
+  requests, change the variable rather than patching individual rules.
+- **Images go in `images/`** — see `images/README.md`. Book covers and gallery
+  photos currently show dashed grey placeholder boxes; each one has the real
+  `<img>` line sitting commented out directly above it, so swapping in a
+  photo is a two-line edit once the file is in `images/`.
+- **Yellow boxes on the page are deliberate.** Anything in a
+  `<p class="editor-note">` is a placeholder note saying what content belongs
+  there. They're visible on purpose so nothing ships half-finished. When you
+  fill a section in with real content, delete its yellow note in the same
+  edit. `grep -rl editor-note --include=*.html .` lists what's left.
+
+**Not finished yet — flag to the site admin, don't quietly work around:**
+
+- **The contact form isn't connected.** It posts to a Formspree placeholder,
+  so messages currently go nowhere. If Sherry mentions the contact form or
+  asks why she isn't getting messages, tell her plainly that it still needs
+  connecting and that it's a site-admin job — don't guess at an endpoint.
+- **The legal pages are skeletons**, not usable policies. If asked to publish
+  them as-is, say they still need real text.
+- **`sherryblackman.com` still points at the old WordPress site.** This repo
+  isn't live yet. Publishing works and is safe — it just updates the
+  not-yet-live copy. Don't tell her to "give the site a minute and refresh"
+  until the domain has actually been switched over; until then, the preview
+  is the only place changes are visible.
+
+**Tone.** Warm, literary, unhurried. Plain sentences, no marketing voice, no
+exclamation marks. When drafting copy for her, keep it in that register and
+always show it in the preview before publishing — it's her voice, not yours.
+
+**Never invent quotes, endorsements, reviews, awards, or press coverage.** The
+empty endorsement cards and press rows stay empty until Sherry supplies real
+ones. Making them up would misattribute words to real people.
 
 ## .claude/
 
