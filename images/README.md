@@ -3,11 +3,11 @@
 Drop image files straight into this folder. Nothing else is needed — they're
 served from `/images/<filename>`.
 
-## What the pages are currently looking for
+## What's here
 
-Each of these has a grey dashed placeholder box on the site right now. Add the
-file here, then swap the placeholder for the `<img>` line that's sitting
-commented out just above it in the HTML.
+All of these came across from the old site and are already wired into the
+pages. Originals were 11 MB in total; they've been resized and re-compressed
+to 1.5 MB with no visible quality loss.
 
 | File | Used on |
 | --- | --- |
@@ -15,10 +15,24 @@ commented out just above it in the HTML.
 | `letters-to-our-daughters-cover.jpg` | Home, Letters to Our Daughters |
 | `tales-from-the-trail-cover.jpg` | Home, Tales from the Trail |
 | `call-to-witness-cover.jpg` | Home, Call to Witness |
-| `field-notes-1.jpg` … `field-notes-8.jpg` | Field Notes gallery |
+| `author-photo.jpg` | About |
+| `field-notes-1.jpg` … `field-notes-6.jpg` | Field Notes gallery |
 
-An author photo for the About and Press pages would be worth adding too —
-there's no slot reserved for one yet.
+`call-to-witness-cover.jpg` is only 336×500 — that's the largest version the
+old site had. It's fine at its current display size but would pixelate if
+shown any larger. A higher-resolution original from the publisher would be
+worth getting.
+
+The Field Notes photos have no captions and empty `alt=""`, because the old
+carousel had none. Worth writing.
+
+## Deliberately not migrated
+
+The five photographs on the Delaware Water Gap blog post are credited on the
+old site to @SitesofConscience, not to Sherry, so they weren't downloaded.
+Retailer and press logos (Amazon, Barnes & Noble, Books-A-Million) weren't
+brought over either — the buy buttons are styled text, which avoids using
+other companies' trademarks.
 
 ## Practical notes
 

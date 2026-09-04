@@ -43,33 +43,50 @@ Two pages had nothing to migrate, because they're empty on the old site too:
 **Press & Media** is a bare heading, and **Field Notes** is a photo carousel
 with no text.
 
+Images have been migrated too: four book covers, an author photo, and six
+Field Notes photographs, all resized and re-compressed (11 MB of originals down
+to 1.5 MB). Blog post pages exist at their original URLs.
+
+## Third-party content deliberately left out
+
+Three things on the old site aren't Sherry's to republish, and were **not**
+copied across. Each has a note on the page explaining what's missing:
+
+- **The Buechner post** (`/blog/books-are-to-read.../`) is, in substance, one
+  long verbatim passage from Frederick Buechner's work. The page now carries a
+  short description of the passage instead. Options: link out to it and add
+  Sherry's own reflection, quote a couple of lines with attribution, or clear
+  permission with the estate.
+- **The outdoor-recreation post** reproduced a long passage from a news
+  article, including direct quotes from an interviewee, with no citation. Only
+  Sherry's own opening paragraph was carried over.
+- **The Delaware Water Gap post's five photographs** are credited on the old
+  site to @SitesofConscience. They were not downloaded.
+
+Also worth a decision: the reader reviews on the *Tales from the Trail* and
+*Call to Witness* pages read like Amazon customer reviews. They're already
+published on Sherry's site, so carrying them is status quo rather than new
+exposure — but reviewer-written text isn't automatically hers. The four named
+*Call to Witness* endorsements are ordinary solicited blurbs and aren't a
+concern.
+
 ## Before this can go live
 
-1. **Images.** Nothing has been migrated — book covers and gallery photos are
-   dashed grey boxes until files land in `images/`. See
-   [images/README.md](images/README.md).
-2. **Blog post bodies.** The three post titles and opening lines are on
-   `/blog/`, but the full post text wasn't brought across, so no title links
-   anywhere yet. Each post needs its own folder.
-3. **Contact form.** `contact-sherry-blackman/index.html` posts to a Formspree
+1. **Contact form.** `contact-sherry-blackman/index.html` posts to a Formspree
    placeholder (`REPLACE_WITH_FORM_ID`). Until a real endpoint is wired up and
    tested, submissions go nowhere.
-4. **Press & Media** needs real content — it has none on either site.
+2. **Press & Media** needs real content — it has none on either site.
+3. **Field Notes captions and alt text.** The six photos came over with no
+   captions (the old carousel had none) and empty `alt=""`.
+4. **The three third-party items above** need a decision each.
 5. **Legal pages.** Privacy policy and terms are skeletons. The privacy policy
    in particular needs to describe the contact form once it's connected.
-6. **Reader reviews — worth a permissions check.** The quotes on the *Tales
-   from the Trail* and *Call to Witness* pages are reader reviews carried over
-   from the old site; several read as Amazon customer reviews. They're already
-   published on Sherry's site, so this is status quo rather than a new
-   exposure, but reviewer-written text isn't automatically hers to republish.
-   Worth confirming before launch. The four named *Call to Witness*
-   endorsements are ordinary solicited blurbs and aren't a concern.
-7. **`CNAME` + DNS.** Not added yet, and deliberately so: `sherryblackman.com`
+6. **`CNAME` + DNS.** Not added yet, and deliberately so: `sherryblackman.com`
    currently serves the live WordPress site. Adding `CNAME` and cutting DNS
    over is the last step, once the content above is actually ready.
 
-Six `.editor-note` boxes remain, one per outstanding item above. They're
-visible on the page by design. Find them with
+Eight `.editor-note` boxes remain, one per outstanding item. They're visible on
+the page by design. Find them with
 `grep -rl editor-note --include=*.html .`
 
 ## Note on paths
