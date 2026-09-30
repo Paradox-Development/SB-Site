@@ -200,6 +200,12 @@ added over time. As built:
   so messages currently go nowhere. If Sherry mentions the contact form or
   asks why she isn't getting messages, tell her plainly that it still needs
   connecting and that it's a site-admin job — don't guess at an endpoint.
+  Step-by-step guides for *her* side of the setup (creating the account that
+  receives messages and sends the thank-you email) are in
+  `docs/contact-form/` — start from `README.md` there. If she wants to do it,
+  walk her through her chosen guide one step at a time; the web address it
+  produces goes to the site admin, who connects it. Never put a secret key
+  from those guides in this repo.
 - **The legal pages are skeletons**, not usable policies. If asked to publish
   them as-is, say they still need real text.
 - **`sherryblackman.com` still points at the old WordPress site.** This repo
