@@ -62,11 +62,17 @@
         <div class="prose">
           <p class="editor-note"><strong>This form is not connected yet.</strong>
           A static site cannot receive form submissions on its own, so it needs a form service
-          (Formspree, Basin or similar) before launch. Create a form there, paste the endpoint
-          into the <code>action="..."</code> below, send a test message, then delete this note.
-          Until that is done, messages sent here go nowhere.</p>
+          before launch. The options and step-by-step setup guides are in
+          <code>docs/contact-form/</code>. Once the service is set up, the site admin puts its
+          address in the <code>action="..."</code> below, sends a test message, then deletes
+          this note. Until that is done, messages sent here go nowhere.</p>
 
-          <form class="form" method="POST" action="https://formspree.io/f/REPLACE_WITH_FORM_ID">
+          <!-- Site admin: action = the service address (Google Apps Script /exec link,
+               Formspree, Basin, or https://api.web3forms.com/submit plus a hidden
+               access_key field). data-turnstile-sitekey = the public Cloudflare Turnstile
+               site key, or leave it empty. See docs/contact-form/for-site-admins.md. -->
+          <form class="form" id="contactForm" method="POST" action="REPLACE_WITH_FORM_ENDPOINT"
+                data-turnstile-sitekey="">
             <div class="field">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" autocomplete="name" required>
@@ -79,7 +85,13 @@
               <label for="message">Message</label>
               <textarea id="message" name="message" required></textarea>
             </div>
+            <!-- Spam trap: hidden from people, filled in by bots. -->
+            <div class="form-trap" aria-hidden="true">
+              <label for="company">Leave this blank</label>
+              <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+            </div>
             <button class="btn" type="submit">Send</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
@@ -118,6 +130,75 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      var form = document.getElementById("contactForm");
+      var status = form.querySelector(".form-status");
+      var button = form.querySelector("[type=submit]");
+      var siteKey = form.getAttribute("data-turnstile-sitekey");
+      var loaded = Date.now();
+
+      function say(text) { status.textContent = text; }
+
+      if (siteKey) {
+        var widget = document.createElement("div");
+        widget.className = "cf-turnstile";
+        widget.setAttribute("data-sitekey", siteKey);
+        form.insertBefore(widget, button);
+        var api = document.createElement("script");
+        api.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+        api.async = true;
+        document.head.appendChild(api);
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        say("");
+
+        // Spam trap filled in, or sent faster than a person could type: drop it quietly.
+        if (form.company.value.trim() !== "" || Date.now() - loaded < 3000) return;
+
+        if (form.action.indexOf("REPLACE_WITH") !== -1) {
+          say("This form isn\u2019t connected yet, so your message wasn\u2019t sent. Please try again soon.");
+          return;
+        }
+
+        var token = form.querySelector('[name="cf-turnstile-response"]');
+        if (siteKey && (!token || !token.value)) {
+          say("One moment \u2014 checking you\u2019re not a robot. Please press Send again in a few seconds.");
+          return;
+        }
+
+        // Google Apps Script only reads URL-encoded bodies and always answers 200
+        // with { ok }; the form services take FormData and answer with a status code.
+        var appsScript = form.action.indexOf("script.google.com") !== -1;
+        var request = appsScript
+          ? { method: "POST", body: new URLSearchParams(new FormData(form)) }
+          : { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } };
+
+        button.disabled = true;
+        button.textContent = "Sending\u2026";
+
+        fetch(form.action, request)
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.status);
+            return appsScript ? r.json() : { ok: true };
+          })
+          .then(function (res) {
+            if (!res.ok) throw new Error(res.error);
+            form.reset();
+            say("Thank you. Your message has been sent.");
+          })
+          .catch(function () {
+            say("Sorry, that didn\u2019t send. Please try again in a moment.");
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = "Send";
+            if (window.turnstile) window.turnstile.reset();
+          });
+      });
+    })();
   </script>
 </body>
 </html>

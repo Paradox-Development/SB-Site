@@ -438,6 +438,10 @@ p { margin: 0 0 1.1em; }
   border-color: var(--accent);
 }
 .field textarea { min-height: 10rem; resize: vertical; }
+.form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form .cf-turnstile { margin-bottom: 1.25rem; }
+.form-status { font-family: var(--sans); font-size: 0.9375rem; color: var(--ink-soft); margin: 1rem 0 0; }
+.form-status:empty { display: none; }
 
 /* ---------- Editor note ---------- */
 /* A visible reminder to whoever is filling the site in. Delete the

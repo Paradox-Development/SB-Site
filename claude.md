@@ -196,7 +196,7 @@ added over time. As built:
 
 **Not finished yet — flag to the site admin, don't quietly work around:**
 
-- **The contact form isn't connected.** It posts to a Formspree placeholder,
+- **The contact form isn't connected.** It posts to a placeholder address,
   so messages currently go nowhere. If Sherry mentions the contact form or
   asks why she isn't getting messages, tell her plainly that it still needs
   connecting and that it's a site-admin job — don't guess at an endpoint.
