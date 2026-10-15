@@ -23,6 +23,11 @@ large changes.
   Action does the merge.** Never push directly to `main`.
 - **Visibility:** this repo is public — GitHub Pages requires it. Everything
   in it is world-readable, including full history.
+- **Also on qikSites:** the pages are tagged for qikEdit, a browser editor on
+  qikSites, so Sherry may also edit the site there. If qikSites is synced to
+  this repo, those edits arrive as ordinary commits — another reason step 1
+  always starts from the latest `main`. If she asks how to use qikEdit, point
+  her to `WELCOME.md` and her site admin.
 - **Brand:** Warm, literary, unhurried. A working writer's site: the books come first, the prose is plain, and nothing shouts..
 
 ## The editing workflow — follow this every time they ask for a change
@@ -169,7 +174,9 @@ added over time. As built:
   directly editable. So a nav change, a new page in the menu, or a new social
   link means editing *every* `.html` file, not one. Change them all in the
   same change set, then check a couple of pages in the preview to be sure none
-  were missed.
+  were missed. The two menus sit between `<!-- qik-nav main-nav -->` /
+  `<!-- qik-nav footer-nav -->` and their matching `-end` comments; keep those
+  comments around each menu's `<ul>`.
 - **Don't rename or move page folders.** The URLs deliberately match the old
   WordPress site so existing links and search results keep working. GitHub
   Pages can't do redirects, so a rename is a dead link with no way to patch
@@ -181,25 +188,39 @@ added over time. As built:
   look fine on the live domain and silently break the styling everywhere else
   (the GitHub Pages preview address, and opening a page straight off disk).
   When you add a page, count its depth and match the other links on it.
+  **One exception: the header and footer menus** use `/`-prefixed links
+  (`/blog/`, `/field-notes/`) on purpose. qikEdit's menu editor writes one
+  identical copy of each menu into every page, so those links can't depend on
+  the page's depth. Keep them `/`-prefixed, and don't add `aria-current` to
+  them: the script at the bottom of each page marks the current page.
+- **The `<!-- qik ... -->` comments are qikEdit's editing tags.** They mark
+  what Sherry can edit in the browser editor on qikSites
+  (`QIKEDIT_DESIGN_GUIDE.md` has the full syntax). Leave them in place: change
+  the content between a tag and its `<!-- qik-end -->`, never the tags
+  themselves. When you add new content or a new page, tag it the same way as
+  the content around it.
 - **Styling lives in `styles.css`.** Colours and fonts are CSS variables in
   `:root` at the top. For "make it warmer", "bigger text", "different colour"
   requests, change the variable rather than patching individual rules.
-- **Images go in `images/`** — see `images/README.md`. Book covers and gallery
-  photos currently show dashed grey placeholder boxes; each one has the real
-  `<img>` line sitting commented out directly above it, so swapping in a
-  photo is a two-line edit once the file is in `images/`.
+- **Images go in `images/`** — see `images/README.md`. The book covers, author
+  photo and Field Notes photos are all in place. To swap one, put the new file
+  in `images/` and change the `src` on the existing `<img>`, keeping the
+  `qik-img` (or gallery) comments around it. Images Sherry uploads through
+  qikEdit live in `/media/` with `/`-prefixed paths; leave those as they are.
 - **Yellow boxes on the page are deliberate.** Anything in a
   `<p class="editor-note">` is a placeholder note saying what content belongs
   there. They're visible on purpose so nothing ships half-finished. When you
   fill a section in with real content, delete its yellow note in the same
-  edit. `grep -rl editor-note --include=*.html .` lists what's left.
+  edit, but keep the qik comments around it: each note sits inside a qikEdit
+  field. `grep -rl editor-note --include=*.html .` lists what's left.
 
 **Not finished yet — flag to the site admin, don't quietly work around:**
 
-- **The contact form isn't connected.** It posts to a Formspree placeholder,
-  so messages currently go nowhere. If Sherry mentions the contact form or
+- **The contact form isn't connected.** The contact page holds a qikForms
+  placeholder (`<!-- qikform -->`) and shows no form until one is built in the
+  qikSites portal and assigned to it. If Sherry mentions the contact form or
   asks why she isn't getting messages, tell her plainly that it still needs
-  connecting and that it's a site-admin job — don't guess at an endpoint.
+  connecting and that it's a site-admin job — don't guess at a form ID.
 - **The legal pages are skeletons**, not usable policies. If asked to publish
   them as-is, say they still need real text.
 - **`sherryblackman.com` still points at the old WordPress site.** This repo

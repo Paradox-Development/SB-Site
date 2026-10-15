@@ -22,6 +22,27 @@ of that for you. Your part is just the conversation.
 A typical change is under a minute of conversation, then a few minutes of
 waiting for the live site to refresh.
 
+## Editing in your browser
+
+There's a second way to make changes: a tool called **qikEdit**, which lets
+you edit the site directly in your web browser. Your site admin will show you
+how to open it. Once it's open, you click on the words, photos or menu on a
+page and change them right there.
+
+A few things that help:
+
+- The **yellow boxes** are notes about what still needs filling in. Once the
+  real words are in, delete the yellow box.
+- The **Field Notes photos** open as a gallery, where you can add photos,
+  take them out, change their order, and write a short description of each.
+- The **menu at the top** only needs changing once: the change appears on
+  every page. The menu at the bottom of the page is separate, so change that
+  one too.
+- The **contact form** is set up by your site admin. If it isn't showing yet,
+  that's why.
+- If you use both qikEdit and Claude, finish and publish in one before you
+  start in the other, so the two don't trip over each other.
+
 ## Preview is the default
 
 You never need to ask for one — Claude shows you a preview before publishing
