@@ -84,7 +84,8 @@ p { margin: 0 0 1.1em; }
 
 /* ---------- Buttons ---------- */
 
-.btn {
+.btn,
+.qikforms-embed .qf-submit {
   display: inline-block;
   font-family: var(--sans);
   font-size: 0.8125rem;
@@ -99,7 +100,8 @@ p { margin: 0 0 1.1em; }
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-.btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.btn:hover,
+.qikforms-embed .qf-submit:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
 
 .btn--ghost { background: transparent; color: var(--accent); }
 .btn--ghost:hover { background: var(--accent); color: #fff; }
@@ -408,10 +410,12 @@ p { margin: 0 0 1.1em; }
 }
 
 /* ---------- Forms ---------- */
+/* The contact form is a qikForms embed: its script writes this markup.
+   Never style .qf-hp, the hidden spam-trap field. */
 
-.form { max-width: 34rem; }
-.field { margin-bottom: 1.25rem; }
-.field label {
+.qikforms-embed { max-width: 34rem; }
+.qikforms-embed .qf-group { margin-bottom: 1.25rem; }
+.qikforms-embed .qf-group label {
   display: block;
   font-family: var(--sans);
   font-size: 0.75rem;
@@ -420,8 +424,9 @@ p { margin: 0 0 1.1em; }
   color: var(--ink-soft);
   margin-bottom: 0.4rem;
 }
-.field input,
-.field textarea {
+.qikforms-embed .qf-group input:not([type="checkbox"]):not([type="radio"]),
+.qikforms-embed .qf-group textarea,
+.qikforms-embed .qf-group select {
   width: 100%;
   font-family: var(--serif);
   font-size: 1rem;
@@ -431,13 +436,18 @@ p { margin: 0 0 1.1em; }
   border-radius: 2px;
   padding: 0.7rem 0.85rem;
 }
-.field input:focus,
-.field textarea:focus {
+.qikforms-embed .qf-group input:focus,
+.qikforms-embed .qf-group textarea:focus,
+.qikforms-embed .qf-group select:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
   border-color: var(--accent);
 }
-.field textarea { min-height: 10rem; resize: vertical; }
+.qikforms-embed .qf-group textarea { min-height: 10rem; resize: vertical; }
+.qikforms-embed .qf-msg { margin: 0; padding: 0.85rem 1rem; border-left: 3px solid; }
+/* After a successful send this message is all that is left of the form. */
+.qikforms-embed .qf-msg--success { padding: 1.5rem; border-color: var(--accent); background: var(--paper-alt); }
+.qikforms-embed .qf-msg--error { color: #8a2a1d; border-color: #c0492f; background: #fbeeea; }
 
 /* ---------- Editor note ---------- */
 /* A visible reminder to whoever is filling the site in. Delete the

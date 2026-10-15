@@ -23,8 +23,18 @@ old site had. It's fine at its current display size but would pixelate if
 shown any larger. A higher-resolution original from the publisher would be
 worth getting.
 
-The Field Notes photos have no captions and empty `alt=""`, because the old
-carousel had none. Worth writing.
+The Field Notes photos have empty `alt=""`, because the old carousel had no
+captions. Worth writing; Sherry can add them in qikEdit's gallery editor.
+
+## Images added through qikEdit
+
+qikEdit's media picker doesn't use this folder. Images uploaded there go to
+`/media/` on qikSites and are referenced as `/media/<filename>`, so a page can
+end up with a mix of `images/` and `/media/` paths. Both work on qikSites.
+
+Uploads are capped at 2560px on the longest edge, turned the right way up and
+stripped of camera and GPS metadata. The size advice below still applies: a
+2560px photo can be several megabytes.
 
 ## Deliberately not migrated
 
